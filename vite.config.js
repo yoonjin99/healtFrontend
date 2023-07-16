@@ -13,9 +13,6 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  build:{
-    outDir:"../exercise_backend/src/main/resource/static"
-  },
   server: {
     proxy:{
       '/api':'http://localhost:8080'
