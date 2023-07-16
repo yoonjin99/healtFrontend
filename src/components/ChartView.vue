@@ -44,7 +44,7 @@ export default {
                 labels: [], // 날짜 데이터
                 datasets: [
                     {
-                        label: 'Data One',
+                        label: this.$route.query.code === '10' ? '데드리프트 기록' : this.$route.query.code === '20' ? '스쿼트 기록' : '숄더프레스 기록',
                         backgroundColor: '#f87979',
                         data: [] // 횟수 * 무게
                     }
