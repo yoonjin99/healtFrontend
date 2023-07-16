@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
       <CommonHeader/>
-      <DialogInsertExercise v-if="isModalViewed" @close-modal="isModalViewed = false" :is-update-page="isUpdatePage" :seq="seq"/>
+      <DialogInsertExercise v-if="isModalViewed" @close-modal="isModalViewed = false" :is-update-page="isUpdatePage" :seq="seq" @reload="reloadData"/>
       <br>
       <h4><button @click="showInsertDialog">기록 등록</button></h4>
 
@@ -64,6 +64,11 @@ export default {
         showInsertDialog(){
             this.isUpdatePage = false
             this.isModalViewed = true
+        },
+        reloadData(){
+            this.isModalViewed = false
+            this.isUpdatePage = false
+            this.getList()
         }
     }
 }
@@ -104,5 +109,29 @@ td{
 }
 p a {
     color: darkblue;
+}
+button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    color: #333;
+    background-color:#fff;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    &[disabled]{
+        cursor: not-allowed;
+    }
+    &.danger {
+        background-color: #ff4949;
+        color: #fff;
+    }
+    &.success {
+        background-color: #13ce66;
+        color: #fff;
+    }
+    &.info {
+        background-color: #50bfff;
+        color: #fff;
+    }
 }
 </style>

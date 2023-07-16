@@ -3,6 +3,9 @@
 </script>
 
 <template>
+    <transition name="fade" appear>
+        <div class="modal-overlay"></div>
+    </transition>
     <div class="modal">
         <div class="overlay"></div>
         <div class="modal-card">
@@ -42,10 +45,12 @@
                 </select>
                 <br>
             </div>
-            <button @click="$emit('close-modal')">취소</button>
-            <button v-if="!isUpdatePage" @click="insertUpdateExercise('I')">등록</button>
-            <button v-if="isUpdatePage" @click="insertUpdateExercise('U')">수정</button>
-            <button v-if="isUpdatePage" @click="deleteExercise">삭제</button>
+            <div style="padding-top: 30px">
+              <button @click="$emit('close-modal')" style="margin-right: 10px">취소</button>
+              <button v-if="!isUpdatePage" @click="insertUpdateExercise('I')">등록</button>
+              <button v-if="isUpdatePage" @click="insertUpdateExercise('U')" style="margin-right: 10px">수정</button>
+              <button type="danger" v-if="isUpdatePage" @click="deleteExercise">삭제</button>
+            </div>
         </div>
     </div>
 </template>
@@ -96,17 +101,13 @@ export default {
 
             axios.post(url, param).then(() => {
                 alert('저장되었습니다.')
-                this.$emit('close-modal')
-            }).then(err => {
-                console.log(err)
+                this.$emit('reload')
             })
         },
         deleteExercise(){
             axios.post('/api/deleteExercise', {seq : this.seq}).then(() => {
                 alert('삭제되었습니다.')
-                this.$emit('close-modal')
-            }).then(err => {
-                console.log(err)
+                this.$emit('reload')
             })
         },
         getExerciseDetail(){
@@ -117,8 +118,6 @@ export default {
                 this.setNumber = data.setNumber
                 this.code = data.code
                 this.times = data.times
-            }).then(err => {
-                console.log(err)
             })
         }
     }
@@ -126,27 +125,87 @@ export default {
 </script>
 
 <style scoped>
-.modal,
-.overlay{
-    width: 100%;
-    height: 100%;
+.modal {
+    position: absolute;
     position: fixed;
-    left: 0;
     top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    max-width: 22em;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    background: #FFF;
+    z-index: 999;
+    transform: none;
 }
-.overlay{
-    opacity: 0.5;
-    background-color: black;
+.modal h1 {
+    margin: 0 0 1rem;
+}
 
+.modal-overlay {
+    content: '';
+    position: absolute;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 998;
+    background: #2c3e50;
+    opacity: 0.6;
+    cursor: pointer;
 }
-.modal-card{
-    position: relative;
-    max-width: 80%;
-    margin: 30px auto auto;
-    padding: 20px;
-    background-color: white;
-    min-height: 500px;
-    z-index: 10;
-    opacity: 1;
+
+/* ---------------------------------- */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .4s linear;
 }
-</style>*
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.pop-enter-active,
+.pop-leave-active {
+    transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+}
+
+.pop-enter,
+.pop-leave-to {
+    opacity: 0;
+    transform: scale(0.3) translateY(-50%);
+}
+button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    color: #333;
+    background-color:#fff;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: '微软雅黑',arail;
+    cursor: pointer;
+    &[disabled]{
+        cursor: not-allowed;
+    }
+    &.danger {
+        background-color: #ff4949;
+        color: #fff;
+    }
+    &.success {
+        background-color: #13ce66;
+        color: #fff;
+    }
+    &.info {
+        background-color: #50bfff;
+        color: #fff;
+    }
+}
+</style>
