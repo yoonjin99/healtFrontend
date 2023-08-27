@@ -19,12 +19,24 @@
             </div>
         </nav>
     </header>
-    <h1>Welcome To My Exercise Writing Site </h1>
+    <h1>{{ this.title }}</h1>
 </template>
 
 <script>
 export default {
     name: 'HelloWorld',
+    beforeCreate() {
+        console.log("beforeCreate hook executed")
+    },
+    created() {
+        console.log("created hook executed")
+        this.title = 'Welcome To My Exercise Writing Site'
+    },
+    data(){
+        return {
+            title: ''
+        }
+    }
 }
 </script>
 

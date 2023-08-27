@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
       <CommonHeader/>
-      <DialogInsertExercise v-if="isModalViewed" @close-modal="isModalViewed = false" :is-update-page="isUpdatePage" :seq="seq" @reload="reloadData"/>
+      <DialogInsertExercise v-if="isModalViewed" @close-modal="this.isModalViewed = false" :is-update-page="isUpdatePage" :seq="seq" @reload="reloadData"/>
       <br>
       <h4><button @click="showInsertDialog">기록 등록</button></h4>
 
@@ -43,11 +43,22 @@ export default {
             isModalViewed: false,
             list: [],
             isUpdatePage: false,
-            seq: 0
+            seq: 0,
+            title: ''
         }
     },
+    beforeMount() {
+        console.log("beforeMount hook executed")
+    },
     mounted() {
+        console.log("mounted hook executed")
         this.getList()
+    },
+    beforeUnmount() {
+        console.log('beforeUnmount hook executed')
+    },
+    unmounted() {
+        console.log('unmounted hook executed')
     },
     methods:{
         getList(){

@@ -120,6 +120,12 @@ export default {
                 this.times = data.times
             })
         }
+    },
+    beforeUpdate() {
+        console.log("beforeUpdate hook executed")
+    },
+    updated() {
+        console.log("updated hook executed")
     }
 }
 </script>
