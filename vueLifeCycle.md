@@ -44,12 +44,15 @@ Vue 생명 주기 단계
    update()는 컴포넌트의 데이터가 변하여 재 렌더링이 일어난 후 실행.<br>
    DOM이 업데이트 완료된 상태이며 연산과 기능을 할 수 있음.<br>
    
-6. Destruction(소멸) 단계
-   beforeDestory()와 destoryed()가 존재.<br>
-   beforeDestory()는 소멸(뷰 컴포넌트 제거)되기 직전에 호출.<br>
+6. Destruction(소멸) 단계<br>
+   ~~vue 2 : beforeDestory()와 destoryed()가 존재.<br>~~
+   vue3에서는 beforeUnmount() 와 unmounted()가 존재
+   
+   beforeUnmount()는 소멸(뷰 컴포넌트 제거)되기 직전에 호출.<br>
 
-   destoryed()는 소멸된 후에 호출.<br>
+   unmounted()는 소멸된 후에 호출.<br>
    Vue의 모든 디텍티브 바인딩 해제되고 모든 이벤트 리스너가 제거되며 모든 하위 Vue 컴포넌트도 삭제됨.<br>
+
 
 생명 주기 표<br>
 --------------------------
