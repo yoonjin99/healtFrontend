@@ -24,6 +24,43 @@
   </div>
 </template>
 
+<script setup>
+import {onMounted, ref} from 'vue';
+import axios from "axios";
+
+let list = ref([])
+const getList = () => {
+  axios.get('/api/getExerciseList').then(res => {
+    list = res.data
+  })
+}
+
+onMounted(() => {
+  getList();
+})
+
+let isModalViewed = ref(false);
+let isUpdatePage = ref(false);
+let seq = ref(0);
+
+const showUpdateDialog = (sequence) => {
+  isUpdatePage = true
+  seq = sequence
+  isModalViewed = true
+}
+
+const showInsertDialog = () => {
+  isUpdatePage = false
+  isModalViewed = true
+}
+
+const reloadData = () => {
+  isModalViewed = false
+  isUpdatePage = false
+  getList()
+}
+</script>
+
 <script>
 import DialogInsertExercise from "@/components/DialogInsertExercise.vue";
 import axios from "axios";
@@ -44,7 +81,6 @@ export default {
             list: [],
             isUpdatePage: false,
             seq: 0,
-            title: ''
         }
     },
     beforeMount() {
